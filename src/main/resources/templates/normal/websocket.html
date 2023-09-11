@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/base::layout(~{::section})">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+</head>
+
+<body>
+	<section>
+
+
+		<div id="chat-room">
+			<div class="container-fluid">
+
+				<div class="row">
+					<div class="col-md-8 offset-md-2">
+						<div class="card mt-3 text-center">
+							<div class="card-header">
+								<form class="form-inline">
+									<div class="form-group">
+										<label for="connect">
+											<h4>WebSocket Connection &nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;</h4>
+										</label>
+										<button id="connect" data-bs-toggle="modal" data-bs-target="#"
+											class="btn btn-success" type="submit">Connect</button>
+										<button id="disconnect" class="btn btn-danger d-none" type="submit"
+											disabled="disabled">Disconnect
+										</button>
+									</div>
+								</form>
+							</div>
+							<a th:href="@{/logout}" style="text-align: right;">Logout</a>
+
+							<div class="card-body">
+								<div class="addUser">
+
+<div class="row">
+	<div class="col-md-3">
+		<button type="submit" class="btn btn-primary" data-bs-toggle="modal"
+			data-bs-target="#exampleModal" id="login">User Details</button>
+										 
+        <button class="btn btn-danger" id="dropdownButton1">Topic</button>        					
+	</div>
+	
+	<div class="col-md-9">
+         <div class="card bg-secondary text-black">
+
+	<div class="card-header text-center">
+		<label>Choose ConnectorId     :    </label>
+		<div class="form-check form-check-inline">
+		  <label class="form-check-label" for="connector1">0</label>
+          <input class="form-check-input" type="radio" name="connector" id="connector0" value="0">
+        </div>
+        <div class="form-check form-check-inline">
+		            <label class="form-check-label" for="connector2">1</label>	
+          <input class="form-check-input" type="radio" name="connector" id="connector1" value="1" checked>
+        </div>
+        <div class="form-check form-check-inline">
+		  <label class="form-check-label" for="connector3">2</label>	
+          <input class="form-check-input" type="radio" name="connector" id="connector2" value="2">
+        </div>
+	</div>
+</div>		
+	</div>
+</div>
+
+
+        
+ <div class="dropdown">
+        <ul class="dropdown-menu" id="dropdownList1" style="display: none;">
+			<li><a class="dropdown-item" href="#">
+				<button onclick="startCharging()" class="btn btn-success">RemoteStartCharging</button>
+			</a></li>
+						
+            <li><a class="dropdown-item" href="#">
+				<button onclick="stopCharging()" class="btn btn-danger">RemoteStopCharging</button>
+			</a></li>
+			
+            <li><a class="dropdown-item" href="#">
+				<button onclick="getConfiguration()" class="btn btn-primary">GetConfiguration</button>
+			</a></li>
+			
+			<li><a class="dropdown-item" href="#">
+				<button onclick="changeConfiguration()" class="btn btn-warning">ChangeConfiguration</button>
+			</a></li>
+			
+			<li><a class="dropdown-item" href="#">
+			
+				<button class="btn btn-info" id="dropdownButton2">TriggerMessage</button>
+				  <div class="dropdown custom-dropdown">
+				      <ul class="dropdown-menu" id="dropdownList2" style="display: none;">
+						<li><a class="dropdown-item" href="#">
+				             <button onclick="bootNotification()" class="btn btn-info">BootNotification</button>
+			            </a></li>
+			            <li><a class="dropdown-item" href="#">
+				             <button onclick="statusNotification()" class="btn btn-info">StatusNotification</button>
+			            </a></li>
+			            <li><a class="dropdown-item" href="#">
+				             <button onclick="meterValues()" class="btn btn-info">MeterValues</button>
+			            </a></li>
+			            <li><a class="dropdown-item" href="#">
+				             <button onclick="heartBeat()" class="btn btn-info">HeartBeat</button>
+			            </a></li>
+				      </ul>
+				  </div>     	  
+			</a></li>
+			
+			<li><a class="dropdown-item" href="#">
+				<button onclick="updateFirmWare()" class="btn btn-dark">UpdateFirmWare</button>
+			</a></li>
+			
+			<li><a class="dropdown-item" href="#">
+				<button onclick="reset()" class="btn btn-secondary">Reset</button>
+			</a></li>
+			
+			<li><a class="dropdown-item" href="#">
+				<button id="dropdownButton3" class="btn btn-success">ChangeAvailability</button>
+				   <div class="dropdown custom-dropdown">
+				      <ul class="dropdown-menu" id="dropdownList3" style="display: none;">
+						<li><a class="dropdown-item" href="#">
+				             <button onclick="Operative()" class="btn btn-success">Operative</button>
+			            </a></li>
+			            <li><a class="dropdown-item" href="#">
+				             <button onclick="Inoperative()" class="btn btn-success">Inoperative</button>
+			            </a></li>
+				      </ul>
+				   </div>    
+				
+			</a></li>
+			
+			<li><a class="dropdown-item" href="#">
+				<button onclick="unLockConnector()" class="btn btn-danger">UnLockConnector</button>
+			</a></li>
+			
+			<li><a class="dropdown-item" href="#">
+				<button onclick="getDiagnostics()" class="btn btn-primary">GetDiagnostics</button>
+			</a></li>
+			
+			<li><a class="dropdown-item" href="#">
+				<button onclick="sendLocalList()" class="btn btn-warning">SendLocalList</button>
+			</a></li>
+			
+			<li><a class="dropdown-item" href="#">
+				<button onclick="getLocalListVersion()" class="btn btn-info">GetLocalListVersion</button>
+			</a></li>
+			
+        </ul>
+    </div>
+								</div>
+
+								<div class="input-group mt-3">
+									<!--
+								<input type="text" placeholder="Enter your message " id="message-value" autofocus
+									class="form-control">-->
+
+									<textarea class="form-control" placeholder="Enter your message"
+										id="message-value"></textarea>
+
+									<div class="input-group-append">
+										<button class="btn btn-dark" id="send-btn">Send</button>
+									</div>
+								</div>
+								<div id="errorMessage"></div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="table-responsive mt-3">
+
+											<table id="conversation" class="table table-striped">
+												<thead>
+													<tr>
+														<th>Messages</th>
+													</tr>
+												</thead>
+
+												<tbody id="message-container-table" style="text-align: left;">
+												</tbody>
+											</table>
+
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Add User Detail</h5>
+						<!--<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+						<button type="button" onclick="handleButtonClick()" id="send-table">ShowTable</button>
+					</div>
+
+					<div class="container">
+						<div class="row">
+							<div class="col-md-10 offset-md-1">
+								<div style="overflow-x:auto;">
+									<table class="table">
+										<thead class="bg-dark" style="color: aliceblue;">
+											<tr>
+												<th>UserName</th>
+												<th>IdTag</th>
+												<th>ExpiryDate</th>
+												<th>ParentIdTag</th>
+												<th>Status</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+
+										<tbody id="userDataBody">
+											<!-- User data will be populated dynamically here -->
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-10 offset-md-1">
+							<div class="table-responsive mt-3">
+
+								<table id="conversation" class="table table-striped">
+									<thead>
+										<tr style="text-align: center;">
+											<th>Messages</th>
+										</tr>
+									</thead>
+
+									<tbody id="userDataTable" class="userTable">
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="modal-body">
+						<div id="messageShow" class="success"></div>
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-10 offset-md-1">
+
+									<form id="userForm" th:object="${user}" method="POST" class="mt-2">
+
+										<div class="mb-3">
+											<label for="username" class="form-label">User Name</label>&nbsp;<span
+												style="color:red;">*</span> <input type="text" name="username"
+												class="form-control" id="username" aria-describedby="emailHelp"
+												required>
+											<div class="error" id="usernameError"></div>
+										</div>
+
+										<div class="mb-3">
+											<label for="idTag" class="form-label">Id Tag</label>&nbsp;<span
+												style="color:red;">*</span> <input type="text" name="idTag"
+												class="form-control" id="idTag" required>
+											<div class="error" id="idTagError"></div>
+											<div id="messageDisplay" style="color: #ff0000;"></div>
+										</div>
+
+										<div class="mb-3">
+											<label for="expirydate" class="form-label">Expiry Date </label>&nbsp;<span
+												style="color:red;">*</span> <input type="text" name="expirydate"
+												class="form-control" id="expirydate" aria-describedby="emailHelp"
+												required>
+											<div class="error" id="expirydateError"></div>
+										</div>
+
+										<div class="mb-3">
+											<label for="parentIdTag" class="form-label">Parent Id Tag</label>&nbsp;<span
+												style="color:red;">*</span> <input type="text" name="parentIdTag"
+												class="form-control" id="parentIdTag" aria-describedby="emailHelp"
+												required>
+											<div class="error" id="parentIdTagError"></div>
+										</div>
+
+										<div class="mb-3">
+											<label for="status" class="form-label">Status</label>&nbsp;<span
+												style="color:red;">*</span>
+											<select name="status" class="form-select" id="status"
+												aria-label="Default select example" required>
+												<option selected></option>
+												<option>Accepted</option>
+												<option>Rejected</option>
+												<option>Expired</option>
+												<option>Invalid</option>
+												<option>Concurrenttx</option>
+											</select>
+											<div class="error" id="statusError"></div>
+										</div>
+										<div class="container text-center">
+
+											<button type="button" id="send-user" class="btn bg-success text-white">Add
+												User</button>
+										</div>
+									</form>
+
+									<form id="updateForm" th:object="${user}" method="POST" style="display: none;"
+										class="mt-2">
+
+										<div class="mb-3">
+											<label for="userId" class="form-label">User Id</label> <input type="text"
+												name="userId" class="form-control" id="userId"
+												aria-describedby="emailHelp" disabled>
+										</div>
+
+										<div class="mb-3">
+											<label for="idtag" class="form-label">Id Tag</label> <input type="text"
+												name="idTag" class="form-control" id="idtag">
+										</div>
+
+										<div class="mb-3">
+											<label for="userName" class="form-label">User Name</label> <input
+												type="text" name="username" class="form-control" id="userName"
+												aria-describedby="emailHelp">
+										</div>
+
+										<div class="mb-3">
+											<label for="expiryDate" class="form-label">Expiry Date </label> <input
+												type="text" name="expirydate" class="form-control" id="expiryDate"
+												aria-describedby="emailHelp">
+										</div>
+
+										<div class="mb-3">
+											<label for="parentidTag" class="form-label">Parent Id Tag</label> <input
+												type="text" name="parentIdTag" class="form-control" id="parentidTag"
+												aria-describedby="emailHelp">
+										</div>
+
+										<div class="mb-3">
+											<label for="Status" class="form-label">Status</label>
+											<select name="status" class="form-select" id="Status"
+												aria-label="Default select example">
+												<option selected></option>
+												<option>Accepted</option>
+												<option>Rejected</option>
+												<option>Expired</option>
+												<option>Invalid</option>
+												<option>Concurrenttx</option>
+											</select>
+										</div>
+										<div class="container text-center">
+											<button type="button" onclick="updateUser()" data-bs-dismiss="alert"
+												class="btn bg-primary text-white">Update
+											</button>
+										</div>
+
+									</form>
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" onclick="handleButtonClick()" id="dis-connect" class="btn btn-secondary"
+							data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+
+						<form>
+
+							<div class="mb-3">
+								<label for="Email_field" class="form-label">Email address</label>
+								<input type="email" class="form-control" id="Email_field" aria-describedby="emailHelp">
+							</div>
+
+							<div class="mb-3">
+								<label for="password" class="form-label">Password</label>
+								<input type="password" class="form-control" id="password">
+							</div>
+
+							<div class="mb-3 form-check">
+								<input type="checkbox" class="form-check-input" id="exampleCheck1">
+								<label class="form-check-label" for="exampleCheck1">Check me out</label>
+							</div>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</form>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Save changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</section>
+
+</body>
+
+</html>
